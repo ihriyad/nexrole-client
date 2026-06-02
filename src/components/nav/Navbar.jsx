@@ -52,7 +52,7 @@ const Navbar = () => {
         </div>
 
         {/* Right: Desktop Links, Divider, and Auth Buttons */}
-        <div className="hidden items-center gap-6 md:flex">
+        <div className="hidden items-center gap-6 md:flex bg-background-secondary px-2 rounded-md">
           <ul className="flex items-center gap-6">
             <li>
               <Link
@@ -85,13 +85,13 @@ const Navbar = () => {
 
           {/* Action Links */}
           <Link
-            href="#"
+            href="/login"
             className="text-[#635bff] hover:text-[#7a73ff] text-sm font-medium transition-colors"
           >
             Sign In
           </Link>
           <Link
-            href="#"
+            href="/register"
             className="bg-gradient-to-r from-[#4d3df7] to-[#703bf7] text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-opacity hover:opacity-90"
           >
             Get Started

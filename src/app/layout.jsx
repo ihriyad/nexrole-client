@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,12 @@ export default function RootLayout({ children }) {
         className="min-h-full flex flex-col max-w-6xl mx-auto"
       >
         <main>{children}</main>
+        <Toaster
+          theme="dark"
+          position="top-center"
+          visibleToasts={5}
+          richColors
+        />
       </body>
     </html>
   );

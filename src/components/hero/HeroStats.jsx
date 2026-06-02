@@ -27,8 +27,8 @@ const HeroStats = () => {
 
   return (
     <section className="md:mt-50">
-      <h1 className="text-gray-400 text-xl font-medium md:text-4xl text-center my-8 md:my-16">
-        Assisting over <strong className="font-bold">15,000 job seekers</strong>{" "}
+      <h1 className="text-gray-300 text-xl font-medium md:text-4xl text-center mb-4 md:mb-8">
+        Assisting over <strong className="">15,000 job seekers</strong>{" "}
         <br /> find their dream positions.
       </h1>
       {/* Cards Grid layout Wrapper */}
@@ -36,7 +36,7 @@ const HeroStats = () => {
         {statsData.map((stat, index) => (
           <div
             key={index}
-            className="bg-[#121214] border border-zinc-800/80 rounded-2xl p-8 flex flex-col justify-between min-h-[200px] shadow-xl hover:border-zinc-700 transition-colors duration-200"
+            className="bg-transparent border border-zinc-800/80 rounded-2xl p-8 flex flex-col justify-between min-h-[200px] shadow-xl hover:border-zinc-700 transition-colors duration-200"
           >
             {/* Card Top Section: Outlined Icon Wrapper */}
             <div className="text-zinc-400 self-start">{stat.icon}</div>
