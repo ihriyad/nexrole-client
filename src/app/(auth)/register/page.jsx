@@ -145,7 +145,7 @@ const RegisterPage = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 text-xl text-foreground-400 hover:text-foreground transition-colors z-10 cursor-pointer"
                 >
-                  {showPassword ? <HiEyeOff /> : <HiEye />}
+                  {showPassword ? <HiEye /> : <HiEyeOff />}
                 </button>
               </div>
               <Description>
@@ -177,7 +177,7 @@ const RegisterPage = () => {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className="absolute right-3 text-xl text-foreground-400 hover:text-foreground transition-colors z-10 cursor-pointer"
                 >
-                  {showConfirmPassword ? <HiEyeOff /> : <HiEye />}
+                  {showConfirmPassword ? <HiEye /> : <HiEyeOff />}
                 </button>
               </div>
               <FieldError />

@@ -125,7 +125,7 @@ const LoginPage = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 text-xl text-foreground-400 hover:text-foreground transition-colors z-10 cursor-pointer"
                 >
-                  {showPassword ? <HiEyeOff /> : <HiEye />}
+                  {showPassword ? <HiEye /> : <HiEyeOff />}
                 </button>
               </div>
               <Description>
