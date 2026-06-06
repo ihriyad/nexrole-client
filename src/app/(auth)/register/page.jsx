@@ -7,6 +7,8 @@ import {
   FieldError,
   Input,
   Label,
+  Radio,
+  RadioGroup,
   Separator,
   Spinner,
   TextField,
@@ -23,6 +25,8 @@ const RegisterPage = () => {
   const [passwordValue, setPasswordValue] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
+  const [roleValue, setRoleValue] = useState("Job Seeker");
   const router = useRouter();
 
   const onSubmit = async (e) => {
@@ -32,12 +36,14 @@ const RegisterPage = () => {
     try {
       const formData = new FormData(e.currentTarget);
       const user = Object.fromEntries(formData.entries());
+      console.log(user);
 
       const { data, error } = await authClient.signUp.email({
         email: user.email,
         password: user.password,
         name: user.name,
         image: user.image,
+        role: user.role,
       });
       if (error) {
         // Use toast.error for actual validation failures
@@ -45,7 +51,7 @@ const RegisterPage = () => {
           description: "Please use a different email address and try again.",
           duration: 5000,
           className:
-            "bg-[#121214] border border-zinc-800 text-white rounded-xl shadow-2xl",
+            "bg-[#121214] border border-zinc-800 text-white  rounded-xl shadow-2xl",
         });
         return; // Halt execution early
       }
@@ -114,6 +120,32 @@ const RegisterPage = () => {
               />
               <FieldError />
             </TextField>
+            <div className="flex flex-col gap-4">
+              <RadioGroup name="role" value={roleValue} onChange={setRoleValue}>
+                <Label>Select your Role:</Label>
+                <Radio value="Job Seeker">
+                  <Radio.Control>
+                    <Radio.Indicator />
+                  </Radio.Control>
+                  <Radio.Content>
+                    <Label>Job Seeker</Label>
+                    <Description>Find Jobs you in your category!</Description>
+                  </Radio.Content>
+                </Radio>
+                <Radio value="Recruiter">
+                  <Radio.Control>
+                    <Radio.Indicator />
+                  </Radio.Control>
+                  <Radio.Content>
+                    <Label>Recruiter</Label>
+                    <Description>Hire People For your Company</Description>
+                  </Radio.Content>
+                </Radio>
+              </RadioGroup>
+              <p className="text-sm text-muted">
+                Selected Role: <span className="font-medium">{roleValue}</span>
+              </p>
+            </div>
             {/* password  */}
             <TextField
               isRequired
@@ -158,12 +190,14 @@ const RegisterPage = () => {
               isRequired
               name="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
+              value={confirmPasswordValue} // controlled value
+              onChange={setConfirmPasswordValue} // update state on every keystroke
               validate={(value) => {
-                if (value !== passwordValue) {
-                  return "Passwords do not match";
-                }
+                if (!value) return null; // skip empty — isRequired handles that
+                if (value !== passwordValue) return "Passwords do not match";
                 return null;
               }}
+              validationBehavior="aria" // key: switches from onBlur → onChange
             >
               <Label>Confirm Password</Label>
               <div className="relative flex items-center">

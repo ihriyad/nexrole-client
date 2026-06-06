@@ -1,12 +1,16 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import { Button } from "@heroui/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
+import { IoMdClose } from "react-icons/io";
+import { RiMenu2Fill } from "react-icons/ri";
 
 const links = [
+  { label: "Home", href: "/" },
   { label: "Browse Jobs", href: "/browse-jobs" },
   { label: "Company", href: "/company" },
   { label: "Pricing", href: "/pricing", isPrivate: true },
@@ -15,6 +19,7 @@ const links = [
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   const { data: session, isPending, error, refetch } = authClient.useSession();
   const user = session?.user;
@@ -23,9 +28,20 @@ const Navbar = () => {
   const isActive = (href) => pathname === href;
 
   const visibleLinks = links.filter((link) => !link.isPrivate || user);
+
+  const handleLogout = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/login"); // redirect to login page
+        },
+      },
+    });
+  };
+
   return (
     <nav className="sticky top-0 z-50 w-full bg-[#1a1a1a] border-b border-zinc-800 text-white">
-      <header className="flex h-20 items-center justify-between px-6 md:px-8 max-w-7xl mx-auto">
+      <header className="flex items-center justify-between p-3 md:p-4">
         {/* Left: Logo & Mobile Menu Toggle Toggle */}
         <div className="flex items-center gap-4">
           <button
@@ -33,82 +49,93 @@ const Navbar = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <HiX size={26} /> : <HiMenuAlt3 size={26} />}
+            {isMenuOpen ? <IoMdClose size={26} /> : <RiMenu2Fill size={26} />}
           </button>
 
           {/* Logo element styling */}
           <Link
             href="/"
-            className="text-xl font-bold tracking-tight flex items-center"
+            className="hidden md:flex text-xl font-bold tracking-tight items-center"
           >
             <span className="text-cyan-400">Nex</span>
             <span className="text-zinc-400 font-extrabold">Role</span>
           </Link>
         </div>
 
-        {/* Right Desktop Links & Actions Layout Container */}
-        <div className="hidden items-center gap-6 md:flex">
-          <ul className="flex items-center gap-1">
-            {visibleLinks.map((link) => {
-              return (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={`px-4 py-2  text-sm font-medium transition-all duration-200 block
+        {/* Right*/}
+        <section className="flex items-center gap-3">
+          <div className="hidden items-center gap-6 md:flex bg-default rounded-md">
+            <ul className="flex items-center gap-1">
+              {visibleLinks.map((link) => {
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className={`px-4 py-2  text-sm font-medium transition-all duration-200 block
                     ${
                       isActive(link.href)
                         ? "underline"
                         : "text-zinc-400 hover:bg-zinc-800/30 hover:text-cyan-400"
                     }`}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-
-          {/* Vertical Separator Line */}
-          <div className="h-5 w-[1px] bg-gray-400 mx-1" />
-
-          {/* Action Auth Buttons */}
-          {user ? (
-            <>
-              <h1>Welcome,{user.name}</h1>
-            </>
-          ) : (
-            <div className="flex items-center gap-4">
-              <Link
-                href="/login"
-                className="text-zinc-400 hover:text-white text-sm font-medium transition-colors"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/register"
-                className="bg-gradient-to-r from-[#4d3df7] to-[#703bf7] hover:from-[#5b4cf8] hover:to-[#7c4ffa] text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all shadow-lg active:scale-95"
-              >
-                Get Started
-              </Link>
-            </div>
-          )}
-        </div>
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          
+          </div>
+            {/* Vertical Separator Line */}
+            <div className="hidden md:flex h-5 w-px bg-gray-400 mx-1" />
+          <div>
+            {/* Action Auth Buttons */}
+            {user ? (
+              <div className="flex gap-2 items-center">
+                <h1 className="text-sm">Welcome,{user.name}</h1>
+                <Button
+                  onClick={() => handleLogout()}
+                  size="sm"
+                  className={"rounded-sm"}
+                  variant="danger-soft"
+                >
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-4">
+                <Link
+                  href="/login"
+                  className="text-zinc-400 hover:text-white text-sm font-medium transition-colors"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/register"
+                  className="bg-gradient-to-r from-[#4d3df7] to-[#703bf7] hover:from-[#5b4cf8] hover:to-[#7c4ffa] text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all shadow-lg active:scale-95"
+                >
+                  Get Started
+                </Link>
+              </div>
+            )}
+          </div>
+        </section>
       </header>
 
       {/* Mobile Menu Dropdown Panel */}
       {isMenuOpen && (
         <div className="border-t border-zinc-800 bg-[#1a1a1a] md:hidden animate-in fade-in slide-in-from-top-2 duration-200">
-          <ul className="flex flex-col gap-1 p-4">
+          <ul className="flex flex-col text-sm gap-1 p-4">
             {visibleLinks.map((link) => {
               return (
                 <li key={link.href}>
                   <Link
                     href={link.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`flex items-center px-4 py-3 rounded-xl text-base font-medium transition-colors
+                    className={`flex items-center px-4 py-3 text-sm font-medium transition-colors
                     ${
                       isActive(link.href)
-                        ? "underline"
+                        ? "underline bg-default"
                         : "text-zinc-400 hover:bg-zinc-800/30 hover:text-cyan-400"
                     }`}
                   >
@@ -117,27 +144,6 @@ const Navbar = () => {
                 </li>
               );
             })}
-
-            <div className="h-[1px] bg-zinc-800 my-2 mx-2" />
-
-            <li>
-              <Link
-                href="/login"
-                className="block w-full px-4 py-3 text-zinc-400 hover:text-white text-base font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Sign In
-              </Link>
-            </li>
-            <li className="pt-2 px-2">
-              <Link
-                href="/register"
-                className="block w-full text-center bg-gradient-to-r from-[#4d3df7] to-[#703bf7] text-white py-3 rounded-xl font-medium shadow-md"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Get Started
-              </Link>
-            </li>
           </ul>
         </div>
       )}

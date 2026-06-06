@@ -38,7 +38,7 @@ const LoginPage = () => {
       if (error) {
         // Use toast.error for actual validation failures
         toast.error(error.message || "Login Failed", {
-          description: "Please use a different email address and try again.",
+          description: "Check your password and Try again or contact us.",
           duration: 5000,
           className:
             "bg-[#121214] border border-zinc-800 text-white rounded-xl shadow-2xl",
