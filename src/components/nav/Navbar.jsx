@@ -39,6 +39,29 @@ const Navbar = () => {
     });
   };
 
+  const navContent = (
+    <ul className="flex flex-col md:flex-row md:items-center text-sm gap-1 p-4 md:p-0">
+      {visibleLinks.map((link) => {
+        return (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              onClick={() => setIsMenuOpen(false)}
+              className={`flex items-center px-4 py-3 text-sm font-medium transition-colors
+                    ${
+                      isActive(link.href)
+                        ? "underline"
+                        : "text-zinc-400 hover:bg-zinc-800/30 hover:text-cyan-400"
+                    }`}
+            >
+              {link.label}
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+
   return (
     <nav className="sticky top-0 z-50 w-full bg-[#1a1a1a] border-b border-zinc-800 text-white">
       <header className="flex items-center justify-between p-3 md:p-4">
@@ -64,30 +87,11 @@ const Navbar = () => {
 
         {/* Right*/}
         <section className="flex items-center gap-3">
-          <div className="hidden items-center gap-6 md:flex bg-default rounded-md">
-            <ul className="flex items-center gap-1">
-              {visibleLinks.map((link) => {
-                return (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={`px-4 py-2  text-sm font-medium transition-all duration-200 block
-                    ${
-                      isActive(link.href)
-                        ? "underline"
-                        : "text-zinc-400 hover:bg-zinc-800/30 hover:text-cyan-400"
-                    }`}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          
+          <div className="hidden items-center gap-6 md:flex bg-default rounded-4xl">
+            {navContent}
           </div>
-            {/* Vertical Separator Line */}
-            <div className="hidden md:flex h-5 w-px bg-gray-400 mx-1" />
+          {/* Vertical Separator Line */}
+          <div className="hidden md:flex h-5 w-px bg-gray-400 mx-1" />
           <div>
             {/* Action Auth Buttons */}
             {user ? (
@@ -125,26 +129,7 @@ const Navbar = () => {
       {/* Mobile Menu Dropdown Panel */}
       {isMenuOpen && (
         <div className="border-t border-zinc-800 bg-[#1a1a1a] md:hidden animate-in fade-in slide-in-from-top-2 duration-200">
-          <ul className="flex flex-col text-sm gap-1 p-4">
-            {visibleLinks.map((link) => {
-              return (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`flex items-center px-4 py-3 text-sm font-medium transition-colors
-                    ${
-                      isActive(link.href)
-                        ? "underline bg-default"
-                        : "text-zinc-400 hover:bg-zinc-800/30 hover:text-cyan-400"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+          {navContent}
         </div>
       )}
     </nav>
