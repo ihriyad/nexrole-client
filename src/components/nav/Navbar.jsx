@@ -12,8 +12,9 @@ import { RiMenu2Fill } from "react-icons/ri";
 const links = [
   { label: "Home", href: "/" },
   { label: "Browse Jobs", href: "/browse-jobs" },
-  { label: "Company", href: "/company" },
+  { label: "Company", href: "/company", isPrivate: true },
   { label: "Pricing", href: "/pricing", isPrivate: true },
+  { label: "Dashboard", href: "/dashboard", isPrivate: true },
 ];
 
 const Navbar = () => {
@@ -23,7 +24,7 @@ const Navbar = () => {
 
   const { data: session, isPending, error, refetch } = authClient.useSession();
   const user = session?.user;
-  console.log(user, "user from navbar");
+  // console.log(user, "user from navbar");
 
   const isActive = (href) => pathname === href;
 
