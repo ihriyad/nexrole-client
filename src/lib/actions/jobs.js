@@ -1,7 +1,7 @@
 "use server";
 
+const baseUrl = process.env.SERVER_URL
 export const addJobAction = async (formData) => {
-  // If the switch was checked, it sends "true". If unchecked, it is null/undefined.
   const isRemote = formData.get("workStructure") === "remote";
 
   const data = {
@@ -24,5 +24,12 @@ export const addJobAction = async (formData) => {
     createdAt: new Date(),
   };
 
-  console.log(data);
+  const res = await fetch(`${baseUrl}/api/jobs`,{
+    method: "POST",
+    headers: {
+      'Content-type' : "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  return res.json();
 };

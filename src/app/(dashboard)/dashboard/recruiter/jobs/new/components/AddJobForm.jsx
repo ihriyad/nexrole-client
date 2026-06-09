@@ -14,7 +14,8 @@ import {
   TextField,
 } from "@heroui/react";
 import { toast } from "sonner";
-import { addJobAction } from "@/lib/actions";
+import { addJobAction } from "@/lib/actions/jobs";
+import { redirect } from "next/navigation";
 
 // ── Static config data ──────────────────────────────────────────────────────
 
@@ -62,12 +63,9 @@ export const AddJobForm = ({ recruiterName, recruiterEmail }) => {
   const formAction = async (formData) => {
     const data = await addJobAction(formData);
     // {todo}
-    //  if (data.insertedId) {
-    //   toast.success("Your Pet has been added Successfully");
-    //   router.push("/dashboard/my_listing");
-    // }
-    if (data) {
-      toast.success("job Added success");
+    if (data.insertedId) {
+      toast.success("Your Job has been added Successfully");
+      redirect("/dashboard/recruiter/jobs");
     }
   };
 
