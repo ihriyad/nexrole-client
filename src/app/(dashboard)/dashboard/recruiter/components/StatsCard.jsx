@@ -4,7 +4,7 @@ const ICON_MAP = {
   totalJobs:        LuFileText,
   totalApplicants:  LuUsers,
   activeJobs:       LuZap,
-  closedJobs:       LuCircleCheck,  // ← updated key
+  closedJobs:       LuCircleCheck, 
 };
 
 export const StatsCard = ({ label, value, statKey }) => {

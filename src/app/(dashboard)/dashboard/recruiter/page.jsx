@@ -11,7 +11,9 @@ const RecruiterPage = async () => {
 
   return (
     <div>
-      <h3 className="text-3xl font-medium">Welcome, {user.name}</h3>
+      <h3 className="text-md font-medium px-4 py-2 mb-4 md:text-2xl">
+        Welcome, <span className="text-cyan-500">{user.name}</span>
+      </h3>
       <div className="flex flex-col gap-8">
         <StatsRow />
         {/* rest of dashboard */}

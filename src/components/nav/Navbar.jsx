@@ -14,7 +14,7 @@ const links = [
   { label: "Browse Jobs", href: "/browse-jobs" },
   { label: "Company", href: "/company", isPrivate: true },
   { label: "Pricing", href: "/pricing", isPrivate: true },
-  { label: "Dashboard", href: "/dashboard", isPrivate: true },
+  { label: "Dashboard", href: "/dashboard/recruiter", isPrivate: true },
 ];
 
 const Navbar = () => {
@@ -26,7 +26,14 @@ const Navbar = () => {
   const user = session?.user;
   // console.log(user, "user from navbar");
 
-  const isActive = (href) => pathname === href;
+  // const isActive = (href) => pathname === href;
+  const isActive = (href) => {
+    if (href === "/dashboard/recruiter") {
+      // Matches '/dashboard', '/dashboard/recruiter', '/dashboard/recruiter/jobs', etc.
+      return pathname === href || pathname.startsWith(`${href}/`);
+    }
+    return pathname === href;
+  };
 
   const visibleLinks = links.filter((link) => !link.isPrivate || user);
 
@@ -52,7 +59,7 @@ const Navbar = () => {
                     ${
                       isActive(link.href)
                         ? "underline"
-                        : "text-zinc-400 hover:bg-zinc-800/30 hover:text-cyan-400"
+                        : "text-zinc-400 hover:bg-zinc-800/30 hover:text-white"
                     }`}
             >
               {link.label}

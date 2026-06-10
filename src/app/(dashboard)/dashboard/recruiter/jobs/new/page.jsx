@@ -9,14 +9,7 @@ const NewJobPage = async () => {
   });
   return (
     <div className="max-w-4xl mx-auto flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-semibold text-foreground">
-          Post a New Job
-        </h1>
-        <p className="text-sm text-foreground-400 mt-1">
-          Fill in the details below to publish your job listing.
-        </p>
-      </div>
+      
 
       <AddJobForm
         recruiterName={session?.user?.name ?? ""}

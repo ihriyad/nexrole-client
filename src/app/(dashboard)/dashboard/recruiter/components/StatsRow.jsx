@@ -10,7 +10,7 @@ const STATS = [
 
 export const StatsRow = ({ stats = STATS }) => {
   return (
-    <section className="flex flex-col gap-5">
+    <section className="flex flex-col gap-5 p-3">
       {/* Stats grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {stats.map((stat) => (

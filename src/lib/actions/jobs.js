@@ -3,7 +3,7 @@
 const baseUrl = process.env.SERVER_URL
 export const addJobAction = async (formData) => {
   const isRemote = formData.get("workStructure") === "remote";
-
+  const companyId = 'my_company'
   const data = {
     jobTitle: formData.get("jobTitle"),
     jobCategory: formData.get("jobCategory"),
@@ -20,6 +20,7 @@ export const addJobAction = async (formData) => {
     benefits: formData.get("benefits") || null,
     recruiterName: formData.get("recruiterName"),
     recruiterEmail: formData.get("recruiterEmail"),
+    companyId,
     status: "active",
     createdAt: new Date(),
   };
