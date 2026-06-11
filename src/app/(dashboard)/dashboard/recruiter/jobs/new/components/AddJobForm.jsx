@@ -13,7 +13,7 @@ import {
   TextField,
 } from "@heroui/react";
 import { toast } from "sonner";
-import { addJobAction } from "@/lib/actions/jobs";
+import { addJobAction, createNewJob } from "@/lib/actions/jobs";
 import { redirect } from "next/navigation";
 
 // ── Static config data ──────────────────────────────────────────────────────
@@ -53,9 +53,39 @@ export const AddJobForm = ({ recruiterName, recruiterEmail }) => {
   const [workStructure, setWorkStructure] = useState("onsite");
   const isRemote = workStructure === "remote";
 
-  const formAction = async (formData) => {
-    const data = await addJobAction(formData);
-    // {todo}
+  // const formAction = async (formData) => {
+  //   const data = await addJobAction(formData);
+  //
+  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const isRemote = formData.get("workStructure") === "remote";
+    const companyId = "my_company";
+    const allData = {
+      jobTitle: formData.get("jobTitle"),
+      jobCategory: formData.get("jobCategory"),
+      jobType: formData.get("jobType"),
+      salaryMin: Number(formData.get("salaryMin")) || null,
+      salaryMax: Number(formData.get("salaryMax")) || null,
+      currency: formData.get("currency"),
+      isRemote,
+      city: isRemote ? null : formData.get("city"),
+      country: isRemote ? null : formData.get("country"),
+      deadline: formData.get("deadline"),
+      responsibilities: formData.get("responsibilities"),
+      requirements: formData.get("requirements"),
+      benefits: formData.get("benefits") || null,
+      recruiterName: formData.get("recruiterName"),
+      recruiterEmail: formData.get("recruiterEmail"),
+      companyId,
+      status: "active",
+      createdAt: new Date(),
+    };
+    // console.log(data);
+
+    const data = await createNewJob(allData);
+
     if (data.insertedId) {
       toast.success("Your Job has been added Successfully");
       redirect("/dashboard/recruiter/jobs");
@@ -63,7 +93,7 @@ export const AddJobForm = ({ recruiterName, recruiterEmail }) => {
   };
 
   return (
-    <form action={formAction} className="max-w-7xl mx-auto p-4 lg:p-8">
+    <form onSubmit={handleSubmit} className="max-w-7xl mx-auto p-4 lg:p-8">
       {/* Header */}
       <div className="mb-8 pb-6 border-b border-divider">
         <h1 className="text-3xl font-bold tracking-tight">
@@ -158,7 +188,7 @@ export const AddJobForm = ({ recruiterName, recruiterEmail }) => {
 
             <div className="mt-5">
               <Select
-              aria-labelledby="currency"
+                aria-labelledby="currency"
                 name="currency"
                 label="Currency"
                 placeholder="Select currency"

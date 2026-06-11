@@ -27,7 +27,7 @@ const EMPLOYEE_RANGES = [
   { id: "501+", label: "501+ employees" },
 ];
 
-const EditCompanyModal = ({ company }) => {
+const EditCompanyModal = ({company}) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -42,9 +42,6 @@ const EditCompanyModal = ({ company }) => {
       logo: null,
       status: "pending",
     };
-
-    setCompany(submittedData);
-    // setIsModalOpen(false);
   };
 
   return (
@@ -69,7 +66,7 @@ const EditCompanyModal = ({ company }) => {
               {/* Header — sticky, never scrolls */}
               <Modal.Header className="flex flex-col gap-1 border-b border-neutral-800 p-4 sm:p-6 bg-[#121212] shrink-0">
                 <Modal.Heading className="text-lg sm:text-xl font-bold text-white">
-                  {company ? "Update Company Details" : "Register New Company"}
+                  Update Company Details
                 </Modal.Heading>
                 <p className="text-[11px] sm:text-xs text-neutral-400">
                   Enter your business details to start hiring on NexRole!
@@ -259,7 +256,7 @@ const EditCompanyModal = ({ company }) => {
                   color="primary"
                   className="bg-white text-black hover:bg-neutral-200 font-bold px-5 text-xs sm:text-sm"
                 >
-                  {company ? "Save Changes" : "Register Company"}
+                  Save Changes
                 </Button>
               </Modal.Footer>
             </form>
