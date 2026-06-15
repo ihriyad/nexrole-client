@@ -1,6 +1,5 @@
 import React from "react";
-import { Button } from "@heroui/react";
-import { FiEdit3, FiGlobe, FiMapPin, FiUsers } from "react-icons/fi";
+import { FiGlobe, FiMapPin, FiUsers } from "react-icons/fi";
 import EditCompanyModal from "./EditCompanyModal";
 const ShowCompany = ({ company }) => {
   return (

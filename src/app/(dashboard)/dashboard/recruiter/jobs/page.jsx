@@ -1,11 +1,12 @@
 import { getCompanyJobs } from "@/lib/api/jobs";
 import { JobsTable } from "./components/JobsTable";
+import { getLoggedInRecruiterCompany } from "@/lib/api/companies";
 
 
 const RecruiterJobsPage = async () => {
-  const companyId = "my_company";
 
-  const jobs = await getCompanyJobs(companyId);
+  const company = await getLoggedInRecruiterCompany();
+  const jobs = await getCompanyJobs(company._id);
 
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-6">

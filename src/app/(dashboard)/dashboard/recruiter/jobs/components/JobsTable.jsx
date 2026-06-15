@@ -97,7 +97,7 @@ export const JobsTable = ({ jobs }) => {
             ) : (
               <Table.Row>
                 <Table.Cell
-                  colSpan={4}
+                  colSpan={5}
                   className="text-center py-8 text-default-400"
                 >
                   No job vacancies found.

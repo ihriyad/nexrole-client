@@ -15,6 +15,7 @@ import {
 import { toast } from "sonner";
 import { addJobAction, createNewJob } from "@/lib/actions/jobs";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 // ── Static config data ──────────────────────────────────────────────────────
 
@@ -49,7 +50,7 @@ const CURRENCIES = [
   { id: "aud", label: "AUD — Australian Dollar" },
 ];
 
-export const AddJobForm = ({ recruiterName, recruiterEmail }) => {
+export const AddJobForm = ({ company }) => {
   const [workStructure, setWorkStructure] = useState("onsite");
   const isRemote = workStructure === "remote";
 
@@ -61,7 +62,6 @@ export const AddJobForm = ({ recruiterName, recruiterEmail }) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const isRemote = formData.get("workStructure") === "remote";
-    const companyId = "my_company";
     const allData = {
       jobTitle: formData.get("jobTitle"),
       jobCategory: formData.get("jobCategory"),
@@ -76,9 +76,9 @@ export const AddJobForm = ({ recruiterName, recruiterEmail }) => {
       responsibilities: formData.get("responsibilities"),
       requirements: formData.get("requirements"),
       benefits: formData.get("benefits") || null,
-      recruiterName: formData.get("recruiterName"),
-      recruiterEmail: formData.get("recruiterEmail"),
-      companyId,
+      companyId: company._id,
+      companyName: company.companyName,
+
       status: "active",
       createdAt: new Date(),
     };
@@ -262,24 +262,22 @@ export const AddJobForm = ({ recruiterName, recruiterEmail }) => {
             </div>
           </section>
 
-          {/* Recruiter */}
+          {/* Company Profile */}
           <section className="bg-default-50 border border-divider rounded-2xl p-5">
-            <h3 className="font-semibold mb-4">Recruiter Profile</h3>
+            <h3 className="font-semibold mb-4">Publish As:</h3>
 
-            <div className="flex flex-col gap-4">
-              <Input
-                name="recruiterName"
-                label="Name"
-                defaultValue={recruiterName}
-                readOnly
-              />
-
-              <Input
-                name="recruiterEmail"
-                label="Email"
-                defaultValue={recruiterEmail}
-                readOnly
-              />
+            <figure>
+              <Image
+                src={company?.logo}
+                height={60}
+                width={60}
+                alt="Company Logo"
+              ></Image>
+            </figure>
+            <div className="flex flex-col gap-2">
+              <p>{company?.companyName}</p>
+              <p className="text-muted">Website</p>
+              <p>{company?.websiteUrl}</p>
             </div>
           </section>
         </div>
