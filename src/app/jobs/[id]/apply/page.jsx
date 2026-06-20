@@ -3,6 +3,7 @@ import { getUserSession } from "@/lib/core/session";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
+import ApplyJob from "./components/ApplyJob";
 
 const ApplyJobPage = async ({ params }) => {
   const { id } = await params;
@@ -23,11 +24,11 @@ const ApplyJobPage = async ({ params }) => {
   }
   const job = await getJobById(id);
   return (
-    <div>
-      <h3>
-        Apply for{" "}
-        <span className="text-primary font-semibold">{job.jobTitle}</span>{" "}
-      </h3>
+    <div className="min-h-[60vh] max-w-3xl mx-auto p-6 sm:p-8 bg-[#121212] border border-neutral-800 rounded-2xl">
+      
+   
+        <ApplyJob job={job} applicant={user} />
+      
     </div>
   );
 };
