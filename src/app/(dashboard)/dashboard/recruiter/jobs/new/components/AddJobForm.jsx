@@ -264,7 +264,7 @@ export const AddJobForm = ({ company }) => {
 
           {/* Company Profile */}
           <section className="bg-default-50 border border-divider rounded-2xl p-5">
-            <h3 className="font-semibold mb-4">Publish As:</h3>
+            <h3 className="font-semibold mb-4">Your Company</h3>
 
             <figure>
               <Image

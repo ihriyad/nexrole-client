@@ -1,6 +1,7 @@
 import React from "react";
 import { FiGlobe, FiMapPin, FiUsers } from "react-icons/fi";
 import EditCompanyModal from "./EditCompanyModal";
+import Image from "next/image";
 const ShowCompany = ({ company }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -8,7 +9,12 @@ const ShowCompany = ({ company }) => {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-divider pb-6">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border border-divider bg-default-50 flex items-center justify-center text-default-400 text-lg sm:text-xl font-bold shrink-0">
-              {company.companyName?.substring(0, 2).toUpperCase()}
+              <Image
+                height={60}
+                width={60}
+                src={company.logo}
+                alt="Company Logo"
+              ></Image>
             </div>
             <div>
               <div className="flex items-center gap-3 flex-wrap">

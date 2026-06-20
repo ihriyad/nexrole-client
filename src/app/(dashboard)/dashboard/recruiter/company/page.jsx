@@ -24,7 +24,7 @@ export const RecruiterCompanyPage = async () => {
           </p>
         </div>
       </div>
-      {company ? (
+      {company?._id ? (
         <ShowCompany company={company}></ShowCompany>
       ) : (
         <div className="bg-content1 border border-divider rounded-2xl p-6 sm:p-12 text-center flex flex-col items-center justify-center gap-4 max-w-2xl mx-auto mt-4 sm:mt-8 shadow-sm">
