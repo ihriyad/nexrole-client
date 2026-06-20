@@ -78,6 +78,7 @@ export const AddJobForm = ({ company }) => {
       benefits: formData.get("benefits") || null,
       companyId: company._id,
       companyName: company.companyName,
+      companyLogo: company.logo,
 
       status: "active",
       createdAt: new Date(),

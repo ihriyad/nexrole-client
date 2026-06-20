@@ -11,7 +11,7 @@ import { RiMenu2Fill } from "react-icons/ri";
 
 const links = [
   { label: "Home", href: "/" },
-  { label: "Browse Jobs", href: "/browse-jobs" },
+  { label: "Browse Jobs", href: "/jobs" },
   { label: "Company", href: "/company", isPrivate: true },
   { label: "Pricing", href: "/pricing", isPrivate: true },
   { label: "Dashboard", href: "/dashboard/recruiter", isPrivate: true },
