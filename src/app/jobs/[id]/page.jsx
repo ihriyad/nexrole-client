@@ -192,9 +192,12 @@ export const JobDetailsPage = async ({ params }) => {
               <hr className="border-neutral-800" />
 
               {/* Instant Call-to-Action Primary Action Button */}
+             <Link
+              href={`/jobs/${id}/apply`}>
               <Button className="w-full bg-white text-black font-bold text-sm h-11 rounded-xl hover:bg-neutral-200 transition-all shadow-lg">
                 Apply for this position
               </Button>
+             </Link>
             </div>
           </aside>
         </div>

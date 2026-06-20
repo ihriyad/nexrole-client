@@ -14,7 +14,7 @@ import {
   TextField,
 } from "@heroui/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { HiEye, HiEyeOff } from "react-icons/hi";
@@ -28,6 +28,8 @@ const RegisterPage = () => {
   const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
   const [roleValue, setRoleValue] = useState("Job Seeker");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/";
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -58,7 +60,7 @@ const RegisterPage = () => {
 
       if (data) {
         toast.success("Account created successfully!");
-        router.push("/"); // Clean client-side programmatic navigation
+        router.push(redirectTo); // Clean client-side programmatic navigation
       }
     } catch (err) {
       // Catch unexpected runtime crashes (network drops, etc)
@@ -268,7 +270,7 @@ const RegisterPage = () => {
         <div className="text-center mt-8">
           <p className="text-sm text-foreground-500">
             Already have an account?{" "}
-            <Link href="/login" className="font-semibold hover:underline">
+            <Link href={`/login?redirect=${redirectTo}`} className="font-semibold hover:underline">
               Log In
             </Link>
           </p>
