@@ -13,7 +13,7 @@ const links = [
   { label: "Home", href: "/" },
   { label: "Browse Jobs", href: "/jobs" },
   { label: "Company", href: "/company", isPrivate: true },
-  { label: "Pricing", href: "/pricing", isPrivate: true },
+  { label: "Pricing", href: "/plans", isPrivate: true },
   { label: "Dashboard", href: "/dashboard/recruiter", isPrivate: true },
 ];
 

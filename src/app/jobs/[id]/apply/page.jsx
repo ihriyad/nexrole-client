@@ -129,7 +129,7 @@ export const ApplyJobPage = async ({ params }) => {
               </p>
             </div>
             <Link
-              href="/pricing"
+              href="/plans"
               className="mt-2 inline-flex items-center justify-center px-5 py-2 text-xs font-bold bg-white text-black rounded-xl hover:bg-neutral-200 transition-all shadow-md"
             >
               Upgrade Your Plan
