@@ -5,17 +5,8 @@ import { Button } from "@heroui/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { IoMdClose } from "react-icons/io";
 import { RiMenu2Fill } from "react-icons/ri";
-
-const links = [
-  { label: "Home", href: "/" },
-  { label: "Browse Jobs", href: "/jobs" },
-  { label: "Company", href: "/company", isPrivate: true },
-  { label: "Pricing", href: "/plans", isPrivate: true },
-  { label: "Dashboard", href: "/dashboard/recruiter", isPrivate: true },
-];
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,6 +15,26 @@ const Navbar = () => {
 
   const { data: session, isPending, error, refetch } = authClient.useSession();
   const user = session?.user;
+
+  const navLinks = [
+    { label: "Home", href: "/" },
+    { label: "Browse Jobs", href: "/jobs" },
+    { label: "Companies", href: "/company", isPrivate: true },
+    { label: "Pricing", href: "/plans", isPrivate: true },
+  ];
+
+  const dashboardLinks = {
+    seeker: "dashboard/seeker",
+    recruiter: "dashboard/recruiter",
+  };
+
+  if(user){
+    navLinks.push({
+      label: "Dashboard",
+      href: dashboardLinks[user?.role || "seeker"],
+      isPrivate: true,
+    })
+  }
   // console.log(user, "user from navbar");
 
   // const isActive = (href) => pathname === href;
@@ -35,7 +46,7 @@ const Navbar = () => {
     return pathname === href;
   };
 
-  const visibleLinks = links.filter((link) => !link.isPrivate || user);
+  const visibleLinks = navLinks.filter((link) => !link.isPrivate || user);
 
   const handleLogout = async () => {
     await authClient.signOut({

@@ -10,11 +10,51 @@ import {
   MdOutlineAppRegistration,
   MdOutlineDashboard,
 } from "react-icons/md";
+import { 
+  LuLayoutDashboard, 
+  LuSearch, 
+  LuBookmark, 
+  LuFileText, 
+  LuCreditCard, 
+  LuSettings 
+} from "react-icons/lu";
 import { PiBuildingOfficeBold } from "react-icons/pi";
 
-export function Sidebar() {
+export function Sidebar({user}) {
   const pathname = usePathname();
-  const navItems = [
+  const seekerLinks = [
+  {
+    icon: <LuLayoutDashboard className="w-4 h-4" />,
+    href: "/dashboard/seeker",
+    label: "Dashboard",
+  },
+  {
+    icon: <LuSearch className="w-4 h-4" />,
+    href: "/jobs", // Direct link to browse openings
+    label: "Jobs",
+  },
+  {
+    icon: <LuBookmark className="w-4 h-4" />,
+    href: "/dashboard/seeker/saved",
+    label: "Saved Jobs",
+  },
+  {
+    icon: <LuFileText className="w-4 h-4" />,
+    href: "/dashboard/seeker/applications",
+    label: "Applications",
+  },
+  {
+    icon: <LuCreditCard className="w-4 h-4" />,
+    href: "/plans", // Or "/dashboard/seeker/billing" depending on your route structure
+    label: "Billing",
+  },
+  {
+    icon: <LuSettings className="w-4 h-4" />,
+    href: "/dashboard/seeker/settings",
+    label: "Settings",
+  },
+];
+  const recruiterLinks = [
     {
       icon: <MdOutlineDashboard />,
       href: "/dashboard/recruiter",
@@ -41,9 +81,16 @@ export function Sidebar() {
     { icon: <FaGear />, href: "#", label: "Settings" },
   ];
 
+  const navItemsMap = {
+    seeker: seekerLinks,
+    recruiter: recruiterLinks,
+  }
+
+  const navLinks = navItemsMap[user?.role || "seeker"];
+
   const navContent = (
     <nav className="flex flex-col gap-1">
-      {navItems.map((item) => (
+      {navLinks.map((item) => (
         <Link
           href={item.href}
           key={item.label}

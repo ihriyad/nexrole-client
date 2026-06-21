@@ -39,7 +39,7 @@ const RegisterPage = () => {
       const formData = new FormData(e.currentTarget);
       const user = Object.fromEntries(formData.entries());
       // console.log(user);
-      const plan = user.role === "Job Seeker" ? "seeker_free" : "recruiter_free";
+      const plan = user.role === "seeker" ? "seeker_free" : "recruiter_free";
 
       const { data, error } = await authClient.signUp.email({
         email: user.email,
@@ -127,7 +127,7 @@ const RegisterPage = () => {
             <div className="flex flex-col gap-4">
               <RadioGroup name="role" value={roleValue} onChange={setRoleValue}>
                 <Label>Select your Role:</Label>
-                <Radio value="Job Seeker">
+                <Radio value="seeker">
                   <Radio.Control>
                     <Radio.Indicator />
                   </Radio.Control>
@@ -136,7 +136,7 @@ const RegisterPage = () => {
                     <Description>Find Jobs you in your category!</Description>
                   </Radio.Content>
                 </Radio>
-                <Radio value="Recruiter">
+                <Radio value="recruiter">
                   <Radio.Control>
                     <Radio.Indicator />
                   </Radio.Control>

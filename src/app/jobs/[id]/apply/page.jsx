@@ -22,7 +22,7 @@ export const ApplyJobPage = async ({ params }) => {
     redirect(`/login?redirect=/jobs/${id}/apply`);
   }
 
-  if (user.role !== "Job Seeker") {
+  if (user.role !== "seeker") {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center text-neutral-400 gap-3 bg-black">
         <FiAlertTriangle className="w-8 h-8 text-amber-500" />
