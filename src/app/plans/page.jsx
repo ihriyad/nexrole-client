@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button, Card } from "@heroui/react";
+import { Card } from "@heroui/react";
 import {
   FiCheck,
   FiZap,
@@ -13,6 +13,7 @@ import {
 const SEEKER_PLANS = [
   {
     name: "Free",
+    id: "seeker_free",
     price: "$0",
     period: "forever",
     description:
@@ -28,6 +29,7 @@ const SEEKER_PLANS = [
   },
   {
     name: "Pro",
+    id: "seeker_pro",
     price: "$19",
     period: "month",
     description:
@@ -43,6 +45,7 @@ const SEEKER_PLANS = [
   },
   {
     name: "Premium",
+    id: "seeker_premium",
     price: "$39",
     period: "month",
     description:
@@ -62,6 +65,7 @@ const SEEKER_PLANS = [
 const RECRUITER_PLANS = [
   {
     name: "Free",
+    id: "recruiter_free",
     price: "$0",
     period: "forever",
     description:
@@ -76,6 +80,7 @@ const RECRUITER_PLANS = [
   },
   {
     name: "Growth",
+    id: "recruiter_growth",
     price: "$49",
     period: "month",
     description:
@@ -91,6 +96,7 @@ const RECRUITER_PLANS = [
   },
   {
     name: "Enterprise",
+    id: "recruiter_enterprise",
     price: "$149",
     period: "month",
     description:
@@ -241,6 +247,7 @@ export const PlansPage = () => {
                 </ul>
               </div>
               <form action="/api/checkout_sessions" method="POST">
+                <input type="hidden" name="plan_id" value={plan.id} />
                 <section>
                   <button
                     className={`w-full font-bold text-xs h-10 rounded-xl transition-all ${
