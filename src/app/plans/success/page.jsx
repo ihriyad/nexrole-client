@@ -1,3 +1,4 @@
+import { createSubscription } from "@/lib/actions/subscriptions";
 import { stripe } from "@/lib/stripe";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -6,7 +7,6 @@ import {
   FiCheckCircle,
   FiMail,
   FiArrowRight,
-  
   FiCreditCard,
 } from "react-icons/fi";
 
@@ -22,7 +22,7 @@ export default async function Success({ searchParams }) {
     expand: ["line_items", "payment_intent"],
   });
 
-  const { status, customer_details, amount_total, currency } = session;
+  const { status, customer_details, amount_total, currency ,metadata } = session;
   const customerEmail = customer_details?.email || "";
 
   if (status === "open") {
@@ -35,6 +35,14 @@ export default async function Success({ searchParams }) {
       style: "currency",
       currency: currency || "usd",
     }).format(amount_total / 100);
+
+    const subsInfo = {
+      email: customerEmail,
+      planId: metadata.planId,
+    }; 
+    
+    const result = await createSubscription(subsInfo);
+    // console.log("Subscription creation result:", result);
 
     return (
       <main className="min-h-screen bg-black text-white flex items-center justify-center p-4 sm:p-6">
@@ -55,7 +63,6 @@ export default async function Success({ searchParams }) {
           <div className="mb-6">
             <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center justify-center gap-2">
               Payment Successful{" "}
-              
             </h1>
             <p className="text-xs text-neutral-400 mt-2 leading-relaxed max-w-xs mx-auto">
               Your transactional record was authorized safely. Your account tier

@@ -12,6 +12,7 @@ import {
   FiZap,
 } from "react-icons/fi";
 import Image from "next/image";
+import { getPlanById } from "@/lib/api/plans";
 
 export const ApplyJobPage = async ({ params }) => {
   const { id } = await params;
@@ -52,10 +53,8 @@ export const ApplyJobPage = async ({ params }) => {
     );
   }
 
-  const plan = {
-    name: "Free Tier",
-    maxApplications: 3,
-  };
+  const plan = await getPlanById(user?.plan || "seeker_free");
+  // console.log(plan1);
 
   const applications = await getApplicationsByApplicant(user.email);
   const count = applications.length;
@@ -142,7 +141,7 @@ export const ApplyJobPage = async ({ params }) => {
               {job.companyLogo && (
                 <Image
                   height={36}
-                  weight={36}
+                  width={36}
                   src={job.companyLogo}
                   alt={job.companyName}
                   className="w-9 h-9 rounded-lg border border-neutral-800 bg-black p-1.5 object-contain"

@@ -38,7 +38,8 @@ const RegisterPage = () => {
     try {
       const formData = new FormData(e.currentTarget);
       const user = Object.fromEntries(formData.entries());
-      console.log(user);
+      // console.log(user);
+      const plan = user.role === "Job Seeker" ? "seeker_free" : "recruiter_free";
 
       const { data, error } = await authClient.signUp.email({
         email: user.email,
@@ -46,6 +47,7 @@ const RegisterPage = () => {
         name: user.name,
         image: user.image,
         role: user.role,
+        plan,
       });
       if (error) {
         // Use toast.error for actual validation failures
