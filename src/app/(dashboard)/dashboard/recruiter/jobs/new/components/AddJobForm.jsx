@@ -94,251 +94,279 @@ export const AddJobForm = ({ company }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-7xl mx-auto p-4 lg:p-8">
-      {/* Header */}
-      <div className="mb-8 pb-6 border-b border-divider">
-        <h1 className="text-3xl font-bold tracking-tight">
-          Create a New Job Listing
-        </h1>
+    <>
+      {company?.status === "pending" ? (
+        <>
+          <div className="w-full max-w-md mx-auto bg-[#121212] border border-neutral-800 rounded-2xl p-6 flex flex-col items-center text-center shadow-xl">
+            <h3 className="text-sm font-medium text-neutral-300 leading-relaxed">
+              Please verify your company information before creating a job
+              listing. Your current verification status is:{" "}
+            </h3>
 
-        <p className="mt-2 text-sm text-default-500">
-          Add job details and attract qualified candidates.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* LEFT */}
-        <div className="lg:col-span-5 flex flex-col gap-6">
-          {/* Basic Info */}
-          <section className="bg-content1 border border-divider rounded-2xl p-6 shadow-sm">
-            <h2 className="font-semibold text-lg mb-5">Job Information</h2>
-
-            <div className="flex flex-col gap-5">
-              <TextField name="jobTitle" isRequired variant="bordered">
-                <Label>Job Title</Label>
-                <Input placeholder="Senior Frontend Developer" />
-              </TextField>
-
-              <Select
-                aria-labelledby="jobCategory"
-                name="jobCategory"
-                label="Job Category"
-                placeholder="Select category"
-              >
-                <Select.Trigger>
-                  <Select.Value />
-                  <Select.Indicator />
-                </Select.Trigger>
-
-                <Select.Popover>
-                  <ListBox>
-                    {JOB_CATEGORIES.map(({ id, label }) => (
-                      <ListBox.Item key={id} id={id} textValue={label}>
-                        {label}
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                    ))}
-                  </ListBox>
-                </Select.Popover>
-              </Select>
-
-              <Select
-                aria-labelledby="jobType"
-                name="jobType"
-                label="Employment Type"
-                placeholder="Select type"
-              >
-                <Select.Trigger>
-                  <Select.Value />
-                  <Select.Indicator />
-                </Select.Trigger>
-
-                <Select.Popover>
-                  <ListBox>
-                    {JOB_TYPES.map((type) => (
-                      <ListBox.Item
-                        key={type}
-                        id={type.toLowerCase()}
-                        textValue={type}
-                      >
-                        {type}
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                    ))}
-                  </ListBox>
-                </Select.Popover>
-              </Select>
-            </div>
-          </section>
-
-          {/* Salary */}
-          <section className="bg-content1 border border-divider rounded-2xl p-6 shadow-sm">
-            <h2 className="font-semibold text-lg mb-5">Salary & Location</h2>
-
-            <div className="grid grid-cols-2 gap-4">
-              <TextField name="salaryMin" variant="bordered">
-                <Label>Minimum Salary</Label>
-                <Input type="number" placeholder="30000" />
-              </TextField>
-
-              <TextField name="salaryMax" variant="bordered">
-                <Label>Maximum Salary</Label>
-                <Input type="number" placeholder="60000" />
-              </TextField>
-            </div>
-
-            <div className="mt-5">
-              <Select
-                aria-labelledby="currency"
-                name="currency"
-                label="Currency"
-                placeholder="Select currency"
-              >
-                <Select.Trigger>
-                  <Select.Value />
-                  <Select.Indicator />
-                </Select.Trigger>
-
-                <Select.Popover>
-                  <ListBox>
-                    {CURRENCIES.map(({ id, label }) => (
-                      <ListBox.Item key={id} id={id} textValue={label}>
-                        {label}
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                    ))}
-                  </ListBox>
-                </Select.Popover>
-              </Select>
-            </div>
-
-            <div className="mt-6 pt-5 border-t border-divider">
-              <Label className="text-sm font-medium">Work Structure</Label>
-
-              <RadioGroup
-                name="workStructure"
-                value={workStructure}
-                onChange={setWorkStructure}
-                orientation="horizontal"
-                className="mt-3 gap-4"
-              >
-                <Radio value="onsite">
-                  <Radio.Control>
-                    <Radio.Indicator />
-                  </Radio.Control>
-
-                  <Radio.Content>
-                    <Label>On-site</Label>
-                  </Radio.Content>
-                </Radio>
-
-                <Radio value="remote">
-                  <Radio.Control>
-                    <Radio.Indicator />
-                  </Radio.Control>
-
-                  <Radio.Content>
-                    <Label>Remote</Label>
-                  </Radio.Content>
-                </Radio>
-              </RadioGroup>
-
-              <div
-                className={`grid grid-cols-2 gap-4 mt-5 ${
-                  isRemote ? "opacity-50 pointer-events-none" : ""
+            {/* Status Badge Injection Point */}
+            <div className="mt-4">
+              <span
+                className={`inline-flex items-center justify-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border select-none ${
+                  company?.status === "pending"
+                    ? "bg-warning-500/10 border-warning-500/20 text-warning"
+                    : "bg-danger-500/10 border-danger-500/20 text-danger"
                 }`}
               >
-                <TextField name="city" isRequired={!isRemote}>
-                  <Label>City</Label>
+                {company?.status || "Unknown"}
+              </span>
+            </div>
+          </div>
+        </>
+      ) : (
+        <form onSubmit={handleSubmit} className="max-w-7xl mx-auto p-4 lg:p-8">
+          {/* Header */}
+          <div className="mb-8 pb-6 border-b border-divider">
+            <h1 className="text-3xl font-bold tracking-tight">
+              Create a New Job Listing
+            </h1>
 
-                  <Input disabled={isRemote} placeholder="Dhaka" />
-                </TextField>
+            <p className="mt-2 text-sm text-default-500">
+              Add job details and attract qualified candidates.
+            </p>
+          </div>
 
-                <TextField name="country" isRequired={!isRemote}>
-                  <Label>Country</Label>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* LEFT */}
+            <div className="lg:col-span-5 flex flex-col gap-6">
+              {/* Basic Info */}
+              <section className="bg-content1 border border-divider rounded-2xl p-6 shadow-sm">
+                <h2 className="font-semibold text-lg mb-5">Job Information</h2>
 
-                  <Input disabled={isRemote} placeholder="Bangladesh" />
-                </TextField>
+                <div className="flex flex-col gap-5">
+                  <TextField name="jobTitle" isRequired variant="bordered">
+                    <Label>Job Title</Label>
+                    <Input placeholder="Senior Frontend Developer" />
+                  </TextField>
+
+                  <Select
+                    aria-labelledby="jobCategory"
+                    name="jobCategory"
+                    label="Job Category"
+                    placeholder="Select category"
+                  >
+                    <Select.Trigger>
+                      <Select.Value />
+                      <Select.Indicator />
+                    </Select.Trigger>
+
+                    <Select.Popover>
+                      <ListBox>
+                        {JOB_CATEGORIES.map(({ id, label }) => (
+                          <ListBox.Item key={id} id={id} textValue={label}>
+                            {label}
+                            <ListBox.ItemIndicator />
+                          </ListBox.Item>
+                        ))}
+                      </ListBox>
+                    </Select.Popover>
+                  </Select>
+
+                  <Select
+                    aria-labelledby="jobType"
+                    name="jobType"
+                    label="Employment Type"
+                    placeholder="Select type"
+                  >
+                    <Select.Trigger>
+                      <Select.Value />
+                      <Select.Indicator />
+                    </Select.Trigger>
+
+                    <Select.Popover>
+                      <ListBox>
+                        {JOB_TYPES.map((type) => (
+                          <ListBox.Item
+                            key={type}
+                            id={type.toLowerCase()}
+                            textValue={type}
+                          >
+                            {type}
+                            <ListBox.ItemIndicator />
+                          </ListBox.Item>
+                        ))}
+                      </ListBox>
+                    </Select.Popover>
+                  </Select>
+                </div>
+              </section>
+
+              {/* Salary */}
+              <section className="bg-content1 border border-divider rounded-2xl p-6 shadow-sm">
+                <h2 className="font-semibold text-lg mb-5">
+                  Salary & Location
+                </h2>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <TextField name="salaryMin" variant="bordered">
+                    <Label>Minimum Salary</Label>
+                    <Input type="number" placeholder="30000" />
+                  </TextField>
+
+                  <TextField name="salaryMax" variant="bordered">
+                    <Label>Maximum Salary</Label>
+                    <Input type="number" placeholder="60000" />
+                  </TextField>
+                </div>
+
+                <div className="mt-5">
+                  <Select
+                    aria-labelledby="currency"
+                    name="currency"
+                    label="Currency"
+                    placeholder="Select currency"
+                  >
+                    <Select.Trigger>
+                      <Select.Value />
+                      <Select.Indicator />
+                    </Select.Trigger>
+
+                    <Select.Popover>
+                      <ListBox>
+                        {CURRENCIES.map(({ id, label }) => (
+                          <ListBox.Item key={id} id={id} textValue={label}>
+                            {label}
+                            <ListBox.ItemIndicator />
+                          </ListBox.Item>
+                        ))}
+                      </ListBox>
+                    </Select.Popover>
+                  </Select>
+                </div>
+
+                <div className="mt-6 pt-5 border-t border-divider">
+                  <Label className="text-sm font-medium">Work Structure</Label>
+
+                  <RadioGroup
+                    name="workStructure"
+                    value={workStructure}
+                    onChange={setWorkStructure}
+                    orientation="horizontal"
+                    className="mt-3 gap-4"
+                  >
+                    <Radio value="onsite">
+                      <Radio.Control>
+                        <Radio.Indicator />
+                      </Radio.Control>
+
+                      <Radio.Content>
+                        <Label>On-site</Label>
+                      </Radio.Content>
+                    </Radio>
+
+                    <Radio value="remote">
+                      <Radio.Control>
+                        <Radio.Indicator />
+                      </Radio.Control>
+
+                      <Radio.Content>
+                        <Label>Remote</Label>
+                      </Radio.Content>
+                    </Radio>
+                  </RadioGroup>
+
+                  <div
+                    className={`grid grid-cols-2 gap-4 mt-5 ${
+                      isRemote ? "opacity-50 pointer-events-none" : ""
+                    }`}
+                  >
+                    <TextField name="city" isRequired={!isRemote}>
+                      <Label>City</Label>
+
+                      <Input disabled={isRemote} placeholder="Dhaka" />
+                    </TextField>
+
+                    <TextField name="country" isRequired={!isRemote}>
+                      <Label>Country</Label>
+
+                      <Input disabled={isRemote} placeholder="Bangladesh" />
+                    </TextField>
+                  </div>
+                </div>
+              </section>
+
+              {/* Company Profile */}
+              <section className="bg-default-50 border border-divider rounded-2xl p-5">
+                <h3 className="font-semibold mb-4">Your Company</h3>
+
+                <figure>
+                  <Image
+                    src={company?.logo}
+                    height={60}
+                    width={60}
+                    alt="Company Logo"
+                  ></Image>
+                </figure>
+                <div className="flex flex-col gap-2">
+                  <p>{company?.companyName}</p>
+                  <p className="text-muted">Website</p>
+                  <p>{company?.websiteUrl}</p>
+                </div>
+              </section>
+            </div>
+
+            {/* RIGHT */}
+            <div className="lg:col-span-7 flex flex-col gap-6">
+              <section className="bg-content1 border border-divider rounded-2xl p-6 shadow-sm">
+                <h2 className="text-xl font-semibold">Job Description</h2>
+
+                <p className="text-sm text-default-500 mb-6">
+                  Describe responsibilities, requirements and benefits.
+                </p>
+
+                <div className="flex flex-col gap-6">
+                  <TextField name="responsibilities" isRequired>
+                    <Label>Responsibilities</Label>
+
+                    <TextArea
+                      placeholder="Describe daily tasks..."
+                      className="min-h-40"
+                    />
+                  </TextField>
+
+                  <TextField name="requirements" isRequired>
+                    <Label>Requirements</Label>
+
+                    <TextArea
+                      placeholder="Skills and experience..."
+                      className="min-h-40"
+                    />
+                  </TextField>
+
+                  <TextField name="benefits">
+                    <Label>Benefits (Optional)</Label>
+
+                    <TextArea
+                      placeholder="Health insurance, bonuses..."
+                      className="min-h-32"
+                    />
+                  </TextField>
+
+                  <TextField name="deadline" isRequired>
+                    <Label>Application Deadline</Label>
+
+                    <Input type="date" />
+                  </TextField>
+                </div>
+              </section>
+
+              <div className="bg-content1 border border-divider rounded-2xl p-4 flex justify-end gap-3">
+                <Button type="reset" variant="flat">
+                  Reset
+                </Button>
+
+                <Button type="submit" color="primary" size="lg">
+                  Publish Job
+                </Button>
               </div>
             </div>
-          </section>
-
-          {/* Company Profile */}
-          <section className="bg-default-50 border border-divider rounded-2xl p-5">
-            <h3 className="font-semibold mb-4">Your Company</h3>
-
-            <figure>
-              <Image
-                src={company?.logo}
-                height={60}
-                width={60}
-                alt="Company Logo"
-              ></Image>
-            </figure>
-            <div className="flex flex-col gap-2">
-              <p>{company?.companyName}</p>
-              <p className="text-muted">Website</p>
-              <p>{company?.websiteUrl}</p>
-            </div>
-          </section>
-        </div>
-
-        {/* RIGHT */}
-        <div className="lg:col-span-7 flex flex-col gap-6">
-          <section className="bg-content1 border border-divider rounded-2xl p-6 shadow-sm">
-            <h2 className="text-xl font-semibold">Job Description</h2>
-
-            <p className="text-sm text-default-500 mb-6">
-              Describe responsibilities, requirements and benefits.
-            </p>
-
-            <div className="flex flex-col gap-6">
-              <TextField name="responsibilities" isRequired>
-                <Label>Responsibilities</Label>
-
-                <TextArea
-                  placeholder="Describe daily tasks..."
-                  className="min-h-40"
-                />
-              </TextField>
-
-              <TextField name="requirements" isRequired>
-                <Label>Requirements</Label>
-
-                <TextArea
-                  placeholder="Skills and experience..."
-                  className="min-h-40"
-                />
-              </TextField>
-
-              <TextField name="benefits">
-                <Label>Benefits (Optional)</Label>
-
-                <TextArea
-                  placeholder="Health insurance, bonuses..."
-                  className="min-h-32"
-                />
-              </TextField>
-
-              <TextField name="deadline" isRequired>
-                <Label>Application Deadline</Label>
-
-                <Input type="date" />
-              </TextField>
-            </div>
-          </section>
-
-          <div className="bg-content1 border border-divider rounded-2xl p-4 flex justify-end gap-3">
-            <Button type="reset" variant="flat">
-              Reset
-            </Button>
-
-            <Button type="submit" color="primary" size="lg">
-              Publish Job
-            </Button>
           </div>
-        </div>
-      </div>
-    </form>
+        </form>
+      )}
+    </>
   );
 };

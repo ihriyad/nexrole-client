@@ -8,18 +8,16 @@ export const serverFetch = async (path) => {
   return res.json();
 };
 
-//post 
+//post
 
-export const serverMutation = async (path, data) => {
+export const serverMutation = async (path, data, method = "POST") => {
   const res = await fetch(`${baseUrl}${path}`, {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json",
-    },
+    method,
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 
-  //authentication 401..
+  if (!res.ok) throw new Error(`Request failed: ${res.status}`);
 
-  return res.json();
+  return res.json(); // now returns { success: true, modifiedCount: 1 }
 };

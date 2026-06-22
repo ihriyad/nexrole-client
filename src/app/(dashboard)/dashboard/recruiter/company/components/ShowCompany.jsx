@@ -21,13 +21,6 @@ const ShowCompany = ({ company }) => {
                 <h2 className="text-xl sm:text-2xl font-bold text-foreground">
                   {company.companyName}
                 </h2>
-                {/* <Badge
-                      variant="flat"
-                      color={getStatusColor(company.status)}
-                      className="capitalize px-2.5 py-0.5 text-xs font-semibold"
-                    >
-                      {company.status}
-                    </Badge> */}
               </div>
               <p className="text-xs sm:text-sm text-default-400 mt-1 capitalize">
                 {company.industry}
@@ -96,12 +89,17 @@ const ShowCompany = ({ company }) => {
         <h3 className="font-semibold text-sm text-foreground">
           Verification Notice
         </h3>
-        <p className="text-xs text-default-500 leading-relaxed">
-          Updates to verification properties must pass active administrative
-          checks. Modifying fields shifts state tracking directly back into{" "}
-          <span className="font-semibold text-warning">pending approval</span>{" "}
-          verification layers.
-        </p>
+        <span
+          className={`inline-flex items-center justify-center px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider border transition-colors select-none ${
+            company.status === "approved"
+              ? "bg-success-500/10 border-success-500/20 text-success"
+              : company.status === "pending"
+                ? "bg-warning-500/10 border-warning-500/20 text-warning"
+                : "bg-danger-500/10 border-danger-500/20 text-danger-500" 
+          }`}
+        >
+          {company.status}
+        </span>
       </div>
     </div>
   );

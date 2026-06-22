@@ -33,7 +33,7 @@ const EMPLOYEE_RANGES = [
   { id: "501+", label: "501+ employees" },
 ];
 
-export const AddCompanyModal = ({ recruiter }) => {
+export const AddCompanyModal = ({ company, recruiter }) => {
   const router = useRouter();
   const formRef = useRef(null); // Reference hook to target the input node tree directly
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -112,7 +112,8 @@ export const AddCompanyModal = ({ recruiter }) => {
       employeeRange: formData.get("employeeRange"),
       description: formData.get("description"),
       logo: uploadedLogoUrl,
-      status: "pending",
+      status: company?.status || "pending",
+
       recruiterId: recruiter.id,
       createAt: new Date(),
     };

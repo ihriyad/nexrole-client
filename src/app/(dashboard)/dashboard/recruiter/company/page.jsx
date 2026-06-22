@@ -40,7 +40,7 @@ export const RecruiterCompanyPage = async () => {
               framework before initializing open job listing postings.
             </p>
           </div>
-          <AddCompanyModal recruiter={user}></AddCompanyModal>
+          <AddCompanyModal company={company} recruiter={user}></AddCompanyModal>
         </div>
       )}
     </div>
